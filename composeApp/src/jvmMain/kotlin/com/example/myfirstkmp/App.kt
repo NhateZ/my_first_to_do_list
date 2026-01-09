@@ -1,0 +1,93 @@
+package com.example.myfirstkmp
+import com.example.myfirstkmp.TaskItem
+
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.GenericFontFamily
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+
+
+import myfirstkmp.composeapp.generated.resources.Res
+import myfirstkmp.composeapp.generated.resources.compose_multiplatform
+import org.jetbrains.compose.resources.Font
+
+@Composable
+@Preview
+fun App() {
+     val tasks = remember { mutableStateListOf<Task>() }
+
+    tasks.addAll(listOf(
+        Task(1,"Wash my belly!",false),
+        Task(2,"My favorite task!",false),
+        Task(3,"Clean my belly!",false)
+    ))
+
+    MaterialTheme(
+        typography = MaterialTheme.typography.copy(
+            bodySmall = MaterialTheme.typography.bodySmall.copy(
+                fontFamily = FontFamily.SansSerif,
+                color = Color.White
+            )
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .background(Color(99, 2, 252, 255))
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text("Input section")// Input
+            val newTaskText = remember { mutableStateOf("") }
+            TextField(singleLine = true, value = newTaskText.value, onValueChange = {newTaskText.value = it})
+            Button(
+                onClick = {
+                    tasks.add(Task(id = tasks.size + 1, text = newTaskText.value, isCompleted = false))
+                    newTaskText.value = ""
+                }
+            ) {
+                Text("Add Task!")
+            }
+
+            Text("Task list")// Tasks list
+            TaskList(
+                tasks = tasks,
+                onTaskCheckedChange = { task, checked ->
+                    val index = tasks.indexOf(task)
+                    if (index >= 0) {
+                        tasks[index] = tasks[index].copy(isCompleted = checked)
+                    }
+                }
+            )
+        }
+    }
+}
