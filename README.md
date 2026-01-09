@@ -7,4 +7,5 @@ This is a Kotlin Multiplatform project targeting Desktop (JVM).
 - a computer
 - jvm 24 installed
 
+## Screenshot
 ![image](/images/window.png "Example of prgram")
