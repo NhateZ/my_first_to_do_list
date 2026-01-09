@@ -8,12 +8,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ColorScheme
@@ -64,21 +66,35 @@ fun App() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier = Modifier.height(8.dp))
 
-            Text("Input section")// Input
+            Text("Input section", color = Color.White)// Input
             val newTaskText = remember { mutableStateOf("") }
-            TextField(singleLine = true, value = newTaskText.value, onValueChange = {newTaskText.value = it})
-            Button(
-                onClick = {
-                    tasks.add(Task(id = tasks.size + 1, text = newTaskText.value, isCompleted = false))
-                    newTaskText.value = ""
-                }
+            TextField(singleLine = true, value = newTaskText.value, onValueChange = { newTaskText.value = it })
+            Row (
+                modifier = Modifier
+                    .padding(10.dp)
             ) {
-                Text("Add Task!")
+                Button(
+                    onClick = {
+                        if (newTaskText.value.isNotEmpty()) {
+                            tasks.add(Task(id = tasks.size + 1, text = newTaskText.value, isCompleted = false))
+                        }
+                        newTaskText.value = ""
+                    }
+                ) {
+                    Text("Add Task!")
+                }
+                Spacer(modifier = Modifier.width(10.dp))
+                Button(
+                    onClick = {
+                        tasks.removeIf { it.isCompleted }
+                    }
+                ) {
+                    Text("Remove checked Tasks!")
+                }
             }
 
-            Text("Task list")// Tasks list
+            Text("Task list", color = Color.White)// Tasks list
             TaskList(
                 tasks = tasks,
                 onTaskCheckedChange = { task, checked ->

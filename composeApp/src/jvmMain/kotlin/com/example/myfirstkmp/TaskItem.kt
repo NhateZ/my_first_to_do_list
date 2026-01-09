@@ -8,25 +8,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-
+import androidx.compose.ui.text.font.FontWeight
 @Composable
 fun TaskItem(task: Task, onCheckedChange: (Boolean) -> Unit) {
     Row (
-        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
     ) {
         Checkbox(
-            modifier = Modifier
-                .background(Color.LightGray),
             checked = task.isCompleted,
             onCheckedChange = { onCheckedChange(it) },
         )
         Text(task.text,
-            color = Color.White,
             modifier = Modifier
-                .padding(8.dp)
+                .padding(horizontal = 5.dp, vertical = 10.dp),
+            fontWeight = FontWeight.Bold
         )
     }
 }
