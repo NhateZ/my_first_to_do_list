@@ -38,7 +38,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.example.myfirstkmp"
+            packageName = "My To-Do List"
             packageVersion = "1.0.0"
         }
     }
